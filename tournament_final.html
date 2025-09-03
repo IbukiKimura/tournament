@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トーナメント表</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #A9A9A9; }
+        .tournament-container { display: flex; justify-content: center; padding: 2rem; }
+        .group { width: 45%; padding: 1rem; }
+        .alpha { background-color: #8B0000; }
+        .beta { background-color: #00008B; }
+        .center-column { width: 25%; display: flex; flex-direction: column; justify-content: space-around; align-items: center; text-align: center; color: white; }
+        .round { display: flex; flex-direction: column; justify-content: space-around; align-items: center; }
+        .match { display: flex; align-items: center; margin: 0.5rem 0; }
+        .participants { display: flex; flex-direction: column; }
+        .participant { background-color: #A9A9A9; color: black; border: 1px solid white; padding: 0.5rem; margin: 0.25rem 0; width: 180px; display: flex; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+        .connector { width: 40px; height: 2px; background-color: white; }
+        .v-connector { width: 2px; height: 100%; background-color: white; position: absolute; left: 50%; }
+        .round-label { writing-mode: vertical-rl; color: white; font-weight: bold; font-size: 1.2rem; margin: 0 1rem; }
+        .active{ border: 2px solid yellow; background-color: rgb(255, 0, 0); }
+    </style>
+</head>
+<body>
+    <div class="tournament-container">
+        <!-- Alpha Group -->
+        <div class="group alpha">
+            <h2 class="text-2xl font-bold text-center text-white mb-4">αグループ</h2>
+            <div class="flex justify-center">
+                <div class="round">
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>1</span></div>
+                            <div class="participant"><span>2</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>3</span></div>
+                            <div class="participant"><span>4</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>5</span></div>
+                            <div class="participant"><span>6</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>7</span></div>
+                            <div class="participant"><span>8</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>9</span></div>
+                            <div class="participant"><span>10</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>11</span></div>
+                            <div class="participant"><span>12</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>13</span></div>
+                            <div class="participant"><span>14</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="match">
+                        <div class="participants">
+                            <div class="participant"><span>15</span></div>
+                            <div class="participant"><span>16</span></div>
+                        </div>
+                        <div class="connector"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Column -->
+        <div class="center-column">
+            
+            <!-- Lottery UI -->
+            <div class="my-4">
+                <div class="flex justify-center mb-4" id="button-menu">
+                    <button class="p-2 rounded bg-blue-600 hover:bg-blue-700 text-white border-gray-700 m-1 w-24" id="load" onclick="loadClick();">Load</button>
+                    <button class="p-2 rounded bg-red-600 hover:bg-red-700 text-white border-gray-700 m-1 w-24" id="Reset" onclick="resetClick();">Reset</button>
+                </div>
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold mb-2 text-white">参加者選択</h2>
+                    <select id="participant-selector" class="w-full p-2 border border-gray-300 rounded text-black"></select>
+                </div>
+                <button class="w-full p-2 rounded bg-green-500 hover:bg-green-600 text-white font-bold mb-4" id="start" onclick="startClick();">番号抽選</button>
+                <div>
+                    <h2 class="text-xl font-bold mb-2 text-white">抽選結果</h2>
+                    <div id="drawn-number-display" class="w-full h-32 bg-gray-200 flex items-center justify-center text-5xl font-bold rounded text-black">?</div>
+                </div>
+            </div>
+            <!-- End Lottery UI -->
+        </div>
+
+        <!-- Beta Group -->
+        <div class="group beta">
+            <h2 class="text-2xl font-bold text-center text-white mb-4">βグループ</h2>
+            <div class="flex justify-center flex-row-reverse">
+                <div class="round">
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>17</span></div>
+                            <div class="participant"><span>18</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>19</span></div>
+                            <div class="participant"><span>20</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>21</span></div>
+                            <div class="participant"><span>22</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>23</span></div>
+                            <div class="participant"><span>24</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>25</span></div>
+                            <div class="participant"><span>26</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>27</span></div>
+                            <div class="participant"><span>28</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>29</span></div>
+                            <div class="participant"><span>30</span></div>
+                        </div>
+                    </div>
+                    <div class="match">
+                        <div class="connector"></div>
+                        <div class="participants">
+                            <div class="participant"><span>31</span></div>
+                            <div class="participant"><span>32</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/gsap.min.js"></script>
+    <script src="./js/howler.min.js"></script>
+    <script src="./js/tournament_final_bracket.js"></script>
+</body>
+</html>
