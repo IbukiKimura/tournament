@@ -148,9 +148,9 @@ function startClick() {
 function startDraw() {
     sound_drumroll.play();
     animationIntervalId = setInterval(() => {
-        const randomSlot = availableSlots[Math.floor(Math.random() * availableSlots.length)];
-        drawnNumberDisplay.textContent = randomSlot;
-    }, 100);
+        const randomNumber = Math.floor(Math.random() * 99) + 1;
+        drawnNumberDisplay.textContent = randomNumber;
+    }, 10);
 
     animationTimeoutId = setTimeout(stopDraw, 3000); // Auto-stop after 3 seconds
 }
