@@ -1,5 +1,14 @@
-let fileHandle;
-let jsonData = {};
+// This is a mock version. File operations are disabled.
+
+let jsonData = {
+    "participants": [
+        "参加者A", "参加者B", "参加者C", "参加者D", "参加者E", "参加者F", "参加者G", "参加者H",
+        "参加者I", "参加者J", "参加者K", "参加者L", "参加者M", "参加者N", "参加者O", "参加者P",
+        "参加者Q", "参加者R", "参加者S", "参加者T", "参加者U", "参加者V", "参加者W", "参加者X",
+        "参加者Y", "参加者Z", "参加者AA", "参加者BB", "参加者CC", "参加者DD", "参加者EE", "参加者FF"
+    ],
+    "history": {}
+};
 let participants = [];
 let availableParticipants = [];
 let bracketState = {}; // { slotName: participantName }
@@ -32,6 +41,11 @@ window.onload = () => {
     
     initialize();
     addEventListeners();
+
+    // Load hardcoded data
+    participants = jsonData.participants;
+    bracketState = jsonData.history || {};
+    initializeUI();
 };
 
 function initialize() {
@@ -65,36 +79,13 @@ function addEventListeners() {
     });
 }
 
-async function loadClick() {
-    try {
-        const [handle] = await window.showOpenFilePicker({ types: [{ accept: { 'application/json': ['.json'] } }] });
-        fileHandle = handle;
-        await readFile();
-    } catch (err) {
-        console.error('File selection cancelled or failed:', err);
-    }
+// File operations are not needed for the mock version.
+function loadClick() {
+    alert('Load functionality is disabled in this mock version.');
 }
 
-async function readFile() {
-    if (!fileHandle) return;
-    try {
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        jsonData = JSON.parse(contents);
-
-        if (!jsonData.participants || !Array.isArray(jsonData.participants)) {
-            alert('無効なファイル形式です。participants配列が含まれている必要があります。');
-            return;
-        }
-
-        participants = jsonData.participants;
-        bracketState = jsonData.history || {};
-        
-        initializeUI();
-    } catch (err) {
-        console.error('Error reading file:', err);
-        alert('ファイルの読み込みに失敗しました。');
-    }
+function readFile() {
+    // This function is not used in the mock version.
 }
 
 function initializeUI() {
@@ -220,18 +211,9 @@ function updateUI(drawnSlot, participantName) {
 }
 
 async function saveState() {
-    if (!fileHandle) return;
+    // In this mock version, state is not saved to a file.
     jsonData.history = bracketState;
-    const updatedContents = JSON.stringify(jsonData, null, 4);
-
-    try {
-        const writable = await fileHandle.createWritable();
-        await writable.write(updatedContents);
-        await writable.close();
-    } catch (err) {
-        console.error('Failed to save file:', err);
-        alert('ファイルの保存に失敗しました。');
-    }
+    console.log("State updated (not saved):", JSON.stringify(jsonData, null, 4));
 }
 
 async function resetClick() {
@@ -243,12 +225,12 @@ async function resetClick() {
     }
     if (confirm('本当にリセットしますか？全ての抽選履歴が消去されます。')) {
         bracketState = {};
-        await saveState();
-        if (fileHandle) {
-            await readFile(); 
-        } else {
-            initializeUI();
-        }
+        jsonData.history = {}; // Also reset history in jsonData
+        await saveState(); // Log to console
+        
+        // Re-initialize UI
+        initializeUI();
+        
         drawnNumberDisplay.textContent = '?';
     }
 }
